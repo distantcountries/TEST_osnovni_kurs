@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
 
     <title>Vivify Blog</title>
 
