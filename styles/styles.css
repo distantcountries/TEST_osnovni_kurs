@@ -28,3 +28,39 @@
      text-decoration: underline;
  }
  
+ @media (min-width: 48em) {
+    html {
+        font-size: 14px;
+    }
+ }
+ 
+ .blog-masthead {
+    background-color:  #b34848;
+ }
+ 
+ h1,
+ .h1,
+ h2,
+ .h2,
+ h3,
+ .h3,
+ h4,
+ .h4,
+ h5,
+ .h5,
+ h6,
+ .h6 {
+    color: #b34848;
+ }
+ 
+ .blog-post a:hover {
+     color: #b34848;
+     text-decoration: underline;
+ }
+ 
+ .comments h5 {
+    display: block;
+    background-color: lightgrey;
+    padding: 0.2rem;
+}
+
