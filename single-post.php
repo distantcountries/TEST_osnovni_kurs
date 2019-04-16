@@ -55,6 +55,7 @@
 			        $singlePost = $statement->fetchAll();
 			    ?>
 
+
 			    <?php
 	       			foreach ($singlePost as $post) {
 	    		?>
@@ -70,8 +71,11 @@
 	        		}
 	    		?>
 
+				<input id="mybutton" type="button" class="btn btn-default" onclick="hideShowComments(), changeButtonText()" value="Hide comments"></input>
+
+
 	    	<!-- /.comments -->
-				<div class="comments">
+				<div class="comments" id="comments">
 				    <h5>COMMENTS:</h5>
 
 				    <?php
@@ -104,5 +108,29 @@
 </main><!-- /.container -->
 
 <?php include 'footer.php' ?>
+
+<script>
+	function hideShowComments() {
+		var x = document.getElementById("comments");
+		if (x.style.display === "none") {
+			x.style.display = "block";
+		} else {
+			x.style.display = "none";
+		}
+	}
+
+	function changeButtonText() {
+    	var elem = document.getElementById("mybutton");
+    	if (elem.value=="Hide comments") elem.value = "Show comments";
+    	else elem.value = "Hide comments";
+	}
+
+		
+		
+
+</script>
+
+
+
 </body>
 </html>
