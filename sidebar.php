@@ -1,8 +1,32 @@
 <aside class="col-sm-3 ml-sm-auto blog-sidebar">
             <div class="sidebar-module sidebar-module-inset">
                 <h4>About</h4>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+
+                <div class="aside_titles">
+                    <?php
+                        $sql = "SELECT id, title FROM posts ORDER BY created_at DESC LIMIT 2";
+                        $statement = $connection->prepare($sql);
+                        $statement->execute();
+                        $statement->setFetchMode(PDO::FETCH_ASSOC);
+                        $posts = $statement->fetchAll();
+                    ?>
+
+                    <?php
+                        foreach ($posts as $post) {
+                    ?>
+                    <div class="aside_links">
+                        <a href="single-post.php?post_id=<?php echo($post['id']) ?>"><?php echo($post['title']) ?></a>
+                    </div><!-- /.blog-post -->
+
+                    <?php
+                        }
+                    ?>
+                </div><!-- /.blog-main -->
             </div>
+
+
+
+
             <div class="sidebar-module">
                 <h4>Archives</h4>
                 <ol class="list-unstyled">
@@ -29,3 +53,8 @@
                 </ol>
             </div>
         </aside><!-- /.blog-sidebar -->
+
+
+
+
+

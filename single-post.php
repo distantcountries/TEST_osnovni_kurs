@@ -71,8 +71,18 @@
 	        		}
 	    		?>
 
-				<input id="mybutton" type="button" class="btn btn-default" onclick="hideShowComments(), changeButtonText()" value="Hide comments"></input>
+<!-- Write new comment-->
+<div class="new_comment_form">
+	<form method="post">
+		<textarea name="new_comment" rows="4" cols="50" placeholder="Your comment..."></textarea>
+		<input type="submit" name="submit" value="Submit"></input>
+	</form>
+</div>
 
+
+
+
+				<input id="mybutton" type="button" class="btn btn-default" onclick="hideShowComments(), changeButtonText()" value="Hide comments"></input>
 
 	    	<!-- /.comments -->
 				<div class="comments" id="comments">
@@ -107,6 +117,10 @@
 
 </main><!-- /.container -->
 
+
+
+
+
 <?php include 'footer.php' ?>
 
 <script>
@@ -124,8 +138,6 @@
     	if (elem.value=="Hide comments") elem.value = "Show comments";
     	else elem.value = "Hide comments";
 	}
-
-		
 		
 
 </script>
