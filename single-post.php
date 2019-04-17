@@ -94,13 +94,13 @@
 					if ($_SERVER["REQUEST_METHOD"] === 'GET' && !empty($_GET['error']) && $_GET['error'] === 'required') {
 						$requiredError = 'All fields required';
 					}
-					
 				?>
+				
 				<div class="new_comment_form" >
 					
 					<form method="post" action="create-comments.php">
 
-						<span class="alert alert-danger" value="All fields required"><?php echo $requiredError;?></span>
+						<span class="alert alert-danger"><?php echo $requiredError;?></span>
 
 						<input name="author" type="text" placeholder="Your name..." id="new_comment_user" value="<?php echo $author;?>"/> 
 

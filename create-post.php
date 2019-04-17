@@ -1,3 +1,29 @@
+<?php
+	include 'db.php';
+
+	// $id = $_POST['id'];
+	// if(!empty($_POST['author']) && !empty($_POST['title']) 
+	// && !empty($_POST['body']) && !empty($_POST['created_at'])){
+    // 	$author = $_POST['author'];
+	// 	$title = $_POST['title'];
+	// 	$body = $_POST['body'];
+	// 	$created_at = $_POST['created_at'];
+
+    // 	$sql = "INSERT INTO comments (author, title, body, created_at, post_id) 
+	// 	VALUES ('$_POST[author]', '$_POST[title]', '$_POST[body]', '$_POST[created_at]', $_POST[id]);";
+
+    // 	$statement = $connection->prepare($sql);
+	// 	$statement->execute();
+
+	// 	header("Location: http://localhost:8080/create-post.php?post_id=$id");
+	// } else {
+	// 	header("Location: http://localhost:8080/create-post.php?post_id=$id&error=required");
+	// }
+
+?>
+
+
+
 
 <!doctype html>
 <html lang="en">
@@ -76,11 +102,20 @@
 		        ?>
 
 
+				<?php
+					$requiredError = '';
+					if ($_SERVER["REQUEST_METHOD"] === 'GET' && !empty($_GET['error']) && $_GET['error'] === 'required') {
+						$requiredError = 'All fields required';
+					}
+				?>
+
 
 
 				<!-- Write new body-->
 				<div class="new_post_form" >
-					<form method="post"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> <!--action="posts.php"  -->
+					<form method="post"  action="posts.php"> <!--action="posts.php"  -->
+
+					<span class="alert alert-danger"><?php echo $requiredError;?></span>
 
 						<span class="error"><?php echo $authorErr;?></span>
 						<input name="author" type="text" placeholder="Your name..." id="new_body_user" value="<?php echo $author;?>"/> 
