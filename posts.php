@@ -1,5 +1,3 @@
-
-
 <div class="col-sm-8 blog-main">
     <?php
         $sql = "SELECT id, title, body, author, created_at FROM posts ORDER BY created_at DESC";

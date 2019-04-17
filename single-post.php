@@ -1,18 +1,3 @@
-<?php
-    $servername = "127.0.0.1";
-    $username = "root";
-    $password = "vivify";
-    $dbname = "blog";
-
-    try {
-        $connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    catch(PDOException $e)
-    {
-        echo $e->getMessage();
-    }
-?>
 
 <!doctype html>
 <html lang="en">
@@ -32,6 +17,10 @@
     <!-- Custom styles for this template -->
     <link href="styles/blog.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
+
+    <style>
+        .error {color: #FF0000;}
+    </style>
 </head>
 
 <body>
@@ -46,15 +35,12 @@
       		
       		<!-- /.single-post -->
 			    <?php
-			    	// if (isset($_GET['post_id'])) {
-
 			        $sql = "SELECT id, title, body, author, created_at FROM posts WHERE posts.id = {$_GET['post_id']}";
 			        $statement = $connection->prepare($sql);
 			        $statement->execute();
 			        $statement->setFetchMode(PDO::FETCH_ASSOC);
 			        $singlePost = $statement->fetchAll();
 			    ?>
-
 
 			    <?php
 	       			foreach ($singlePost as $post) {
@@ -71,44 +57,66 @@
 	        		}
 	    		?>
 
-<!-- Write new comment-->
-<div class="new_comment_form">
-	<form method="post">
-		<textarea name="new_comment" rows="4" cols="50" placeholder="Your comment..."></textarea>
-		<input type="submit" name="submit" value="Submit"></input>
-	</form>
-</div>
+
+	    		<!-- Form validation-->
+				<?php
+		            
+		            $authorErr = $commentErr = "";
+		            $comment = $author = "";
+
+		            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+		            	if (empty($_POST["author"])) {
+		                    $authorErr = "Name is required";
+		                } else {
+		                    $author = test_input($_POST["author"]);
+		                }
+
+		                if (empty($_POST["comment"])) {
+		                    $commentErr = "Comment is required";
+		                } else {
+		                    $comment = test_input($_POST["comment"]);
+		                }
+		                }
+
+		            function test_input($data) {
+		                $data = trim($data);
+		                $data = stripslashes($data);
+		                $data = htmlspecialchars($data);
+		                return $data;
+		            }
+		        ?>
 
 
+				<!-- Write new comment-->
+				<?php
+					$requiredError = '';
+					if ($_SERVER["REQUEST_METHOD"] === 'GET' && !empty($_GET['error']) && $_GET['error'] === 'required') {
+						$requiredError = 'All fields required';
+					}
+					
+				?>
+				<div class="new_comment_form" >
+					
+					<form method="post" action="create-comments.php">
 
+						<span class="alert alert-danger" value="All fields required"><?php echo $requiredError;?></span>
 
-				<input id="mybutton" type="button" class="btn btn-default" onclick="hideShowComments(), changeButtonText()" value="Hide comments"></input>
+						<input name="author" type="text" placeholder="Your name..." id="new_comment_user" value="<?php echo $author;?>"/> 
 
-	    	<!-- /.comments -->
-				<div class="comments" id="comments">
-				    <h5>COMMENTS:</h5>
+						<span class="error"><?php echo $commentErr;?></span>
+						<textarea name="comment" rows="4" cols="50" placeholder="Your comment..."><?php echo $comment;?></textarea> 
 
-				    <?php
-				        $sqlComments =
-				            "SELECT comments.author, comments.text FROM comments JOIN posts ON comments.post_id = posts.id WHERE comments.post_id = {$_GET['post_id']}";
+						<input type="hidden" value="<?php echo $_GET['post_id']; ?>" name="id"/>
 
-				        $statement = $connection->prepare($sqlComments);
-				        $statement->execute();
-				        $statement->setFetchMode(PDO::FETCH_ASSOC);
-				        $comments = $statement->fetchAll();
-				    ?>
+						<input type="submit" name="submit" value="Submit" class="btn btn-default"></input>
+					</form>
+				</div> <!-- /.Write new comment-->
 
-				    <?php
-					    echo '<ul>';
-					       	foreach ($comments as $comment) {
-	                       		echo '<li>' . '<strong>' . $comment['author'] . '</strong>' . ': ' . $comment['text'] . '</li>';                     		
-	               				echo '<hr>';
-	                        }
-	                    echo '</ul>';    
-				    ?>
-				            
-				</div><!-- /.comments -->
-		        
+				
+				
+				<?php include 'comments.php' ?>
+
 		</div><!-- /.blog-main -->
 
         <?php include 'sidebar.php' ?>
@@ -117,31 +125,7 @@
 
 </main><!-- /.container -->
 
-
-
-
-
 <?php include 'footer.php' ?>
-
-<script>
-	function hideShowComments() {
-		var x = document.getElementById("comments");
-		if (x.style.display === "none") {
-			x.style.display = "block";
-		} else {
-			x.style.display = "none";
-		}
-	}
-
-	function changeButtonText() {
-    	var elem = document.getElementById("mybutton");
-    	if (elem.value=="Hide comments") elem.value = "Show comments";
-    	else elem.value = "Hide comments";
-	}
-		
-
-</script>
-
 
 
 </body>
