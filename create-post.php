@@ -9,7 +9,7 @@
 	// 	$body = $_POST['body'];
 	// 	$created_at = $_POST['created_at'];
 
-    // 	$sql = "INSERT INTO comments (author, title, body, created_at, post_id) 
+    // 	$sql = "INSERT INTO posts (author, title, body, created_at, post_id) 
 	// 	VALUES ('$_POST[author]', '$_POST[title]', '$_POST[body]', '$_POST[created_at]', $_POST[id]);";
 
     // 	$statement = $connection->prepare($sql);
@@ -90,6 +90,15 @@
 		                    $created_at = test_input($_POST["created_at"]);
 		                }
 
+						if (!empty($author) && !empty($title) && !empty($body) && !empty($created_at)) {
+							$sql = "INSERT INTO posts (author, title, body, created_at) 
+							VALUES ('$author', '$title', '$body', '$created_at');";
+	
+							$statement = $connection->prepare($sql);
+							$statement->execute();
+	
+							header("Location: http://localhost:8080/index.php");
+						}
 
 		            }
 
@@ -113,7 +122,7 @@
 
 				<!-- Write new body-->
 				<div class="new_post_form" >
-					<form method="post"  action="posts.php"> <!--action="posts.php"  -->
+					<form method="post"  action=""> <!--action="posts.php"  -->
 
 					<span class="alert alert-danger"><?php echo $requiredError;?></span>
 
