@@ -1,28 +1,6 @@
 <?php
 	include 'db.php';
-
-	// $id = $_POST['id'];
-	// if(!empty($_POST['author']) && !empty($_POST['title']) 
-	// && !empty($_POST['body']) && !empty($_POST['created_at'])){
-    // 	$author = $_POST['author'];
-	// 	$title = $_POST['title'];
-	// 	$body = $_POST['body'];
-	// 	$created_at = $_POST['created_at'];
-
-    // 	$sql = "INSERT INTO posts (author, title, body, created_at, post_id) 
-	// 	VALUES ('$_POST[author]', '$_POST[title]', '$_POST[body]', '$_POST[created_at]', $_POST[id]);";
-
-    // 	$statement = $connection->prepare($sql);
-	// 	$statement->execute();
-
-	// 	header("Location: http://localhost:8080/create-post.php?post_id=$id");
-	// } else {
-	// 	header("Location: http://localhost:8080/create-post.php?post_id=$id&error=required");
-	// }
-
 ?>
-
-
 
 
 <!doctype html>
@@ -123,8 +101,9 @@
 				<!-- Write new body-->
 				<div class="new_post_form" >
 					<form method="post"  action=""> <!--action="posts.php"  -->
-
-					<span class="alert alert-danger"><?php echo $requiredError;?></span>
+					<?php if (!empty($requiredError)) {?>
+						<span class="alert alert-danger"><?php echo $requiredError;?></span>
+					<?php } ?>
 
 						<span class="error"><?php echo $authorErr;?></span>
 						<input name="author" type="text" placeholder="Your name..." id="new_body_user" value="<?php echo $author;?>"/> 
@@ -135,7 +114,7 @@
 						<span class="error"><?php echo $bodyErr;?></span>
 						<textarea name="body" rows="4" cols="50" placeholder="Your post text..."><?php echo $body;?></textarea> 
 
-						<span class="error"><?php echo $bodyErr;?></span>
+						<span class="error"><?php echo $created_atErr;?></span>
 						<input type="date" name="created_at" id="new_body_user">
 
 

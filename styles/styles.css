@@ -92,3 +92,9 @@ outline: none;
 border: none;
 }
 
+.delete_button {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: flex-end;
+}

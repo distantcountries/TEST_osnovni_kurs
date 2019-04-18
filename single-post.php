@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -32,6 +31,7 @@
     <div class="row">       
 
       	<div class="col-sm-8 blog-main">
+
       		
       		<!-- /.single-post -->
 			    <?php
@@ -42,9 +42,28 @@
 			        $singlePost = $statement->fetchAll();
 			    ?>
 
+
 			    <?php
 	       			foreach ($singlePost as $post) {
 	    		?>
+
+
+	    		<!-- delete post button -->
+	      		<form name="deletePostForm" class="delete_button "method="post" action="delete-post.php">
+				  <input type="hidden" value="<?php echo $_GET['post_id']; ?>" name="id"/>
+				  <input id="submitDelete" type="button" name="button" value="Delete this post" class="btn btn-primary"></input>
+	      		</form>
+
+				<script>
+					document.getElementById('submitDelete').addEventListener("click", function(event){
+						event.preventDefault();
+						if (window.confirm("Do you really want to delete this post?")) { 
+							document.deletePostForm.submit();
+						}
+					});
+				</script>
+
+
 
 		            <div class="blog-post">
 		                <h2 class="blog-post-title"><?php echo($post['title']) ?></h2>
@@ -99,9 +118,9 @@
 				<div class="new_comment_form" >
 					
 					<form method="post" action="create-comments.php">
-
-						<span class="alert alert-danger"><?php echo $requiredError;?></span>
-
+						<?php if (!empty($requiredError)) {?>
+							<span class="alert alert-danger"><?php echo $requiredError;?></span>
+						<?php } ?>
 						<input name="author" type="text" placeholder="Your name..." id="new_comment_user" value="<?php echo $author;?>"/> 
 
 						<span class="error"><?php echo $commentErr;?></span>
